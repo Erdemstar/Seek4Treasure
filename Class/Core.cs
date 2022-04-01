@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Seek4Treasure.Control;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -18,18 +19,6 @@ namespace Seek4Treasure.Class
             new KeyValuePair<string, List<string>>("ruby",new List<string>() {".rb",}),
             new KeyValuePair<string, List<string>>("c",new List<string>() {".c",}),
             new KeyValuePair<string, List<string>>("all",new List<string>() {".cs", ".py", ".rb", ".c", ".txt",})
-        };
-
-        // Regex list
-        public List<string> regexPattern = new List<string>()
-        {
-            //Password
-            "pass",
-            "pwd",
-            //Token
-
-            //Credit Card
-            @"^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$",
         };
 
         #endregion
@@ -139,6 +128,10 @@ namespace Seek4Treasure.Class
         /// Output      : List<outputModel> (FileName, FileNumber, Data)     / null
         public List<outputModel> fileRead(string filename)
         {
+            Password pass = new Password();
+            Token token = new Token();
+            Card card = new Card();
+
             var result = new List<outputModel>();
             var counter = 0;
 
@@ -147,26 +140,37 @@ namespace Seek4Treasure.Class
                 foreach (string line in File.ReadLines(filename))
                 {
                     counter++;
-
-                    //regex loop
-                    foreach (var regex in regexPattern)
+                    
+                    foreach (var item in pass.Control(line))
                     {
-                        //find regex in file loop
-                        foreach (Match match in Regex.Matches(line, regex))
-                        {
-                            if (match.Success && match.Groups.Count > 0)
-                            {
-                                result.Add(
-                                    new outputModel()
-                                    {
-                                        fileName = filename,
-                                        lineNumber = counter.ToString(),
-                                        Line = line
-                                    }
-                                    );
-                            }
-                        }
+                        result.Add(new outputModel() {
+                            fileName = filename,
+                            lineNumber = counter.ToString(),
+                            line = item.Item1,
+                            regexRule = item.Item2
+                        });
+                    }
 
+                    foreach (var item in token.Control(line))
+                    {
+                        result.Add(new outputModel()
+                        {
+                            fileName = filename,
+                            lineNumber = counter.ToString(),
+                            line = item.Item1,
+                            regexRule = item.Item2
+                        });
+                    }
+
+                    foreach (var item in card.Control(line))
+                    {
+                        result.Add(new outputModel()
+                        {
+                            fileName = filename,
+                            lineNumber = counter.ToString(),
+                            line = item.Item1,
+                            regexRule = item.Item2
+                        });
                     }
 
                 }

@@ -10,6 +10,7 @@ namespace Seek4Treasure.Class
     {
         public string fileName { get; set; }
         public string lineNumber { get; set; }
-        public string Line { get; set; }
+        public string line { get; set; }
+        public string regexRule { get; set; }
     }
 }
