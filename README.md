@@ -12,6 +12,10 @@ The available arguments are as follows.
 | lang   |The language to be checked is selected.|
 | folder |The path of the folder to be checked is specified. |
 | output |Specifies where the Seek4TreasureResult.json file will be created.|
+| excludeFileName |The specified filename is excluded from the control.|
+| excludeFileWithExtension |The specified filename and extension are excluded from the control.|
+| excludeExtension |The specified extension is excluded from control..|
+| help |Help about arguments.|
 
 The available languages are as follows.
 
@@ -19,14 +23,21 @@ The available languages are as follows.
  - python
  - ruby
  - c
+ - js
  - all
 
 ## Example Usage
 
 ```csharp
+Seek4Treasure.exe --lang csharp --folder C:\Users\Desktop\API\
+
 Seek4Treasure.exe --lang all --folder C:\Users\Desktop\API\ --output C:\Users\Desktop\
 
-Seek4Treasure.exe --lang csharp --folder C:\Users\Desktop\API\
+Seek4Treasure.exe --lang all --folder C:\Users\Desktop\API\ --output C:\Users\Desktop\ --excludeExtension .js,.txt,.cs
+
+Seek4Treasure.exe --lang all --folder C:\Users\Desktop\API\ --output C:\Users\Desktop\ --excludeFileWithExtension AllTaskByProjectName.json
+
+Seek4Treasure.exe --lang all --folder C:\Users\source\repos\  --output C:\Users\Desktop\ --excludeFileName bootstrap,bootstrap.bundle,jquery --excludeFileWithExtension AllTaskByProjectName.json,SelectedClosedTask.json,
 ```
 
 ## Contributing

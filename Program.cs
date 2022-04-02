@@ -31,6 +31,25 @@ namespace Seek4Treasure
                         var allfiles = c.listFileFromFolder(o.folder);
                         var extesions = c.returnExtensionListByLanguage(o.lang);
                         var files = c.extractFilesByExtension(allfiles, extesions);
+
+                        if (o.excludeExtension != "false")
+                        {
+                            var excludeList = c.excludeParamParser(o.excludeExtension);
+                            files = c.excludeFilesByExtension(files, excludeList);
+                        }
+
+                        if (o.excludeFileName != "false")
+                        {
+                            var excludeList = c.excludeParamParser(o.excludeFileName);
+                            files = c.excludeFileByName(files, excludeList);
+                        }
+
+                        if (o.excludeFileWithExtension != "false")
+                        {
+                            var excludeList = c.excludeParamParser(o.excludeFileWithExtension);
+                            files = c.excludeFileByFileAndExtension(files, excludeList);
+                        }
+
                         List<outputModel> resultObject = c.result(files);
 
                         if (o.output == "false")
@@ -50,6 +69,25 @@ namespace Seek4Treasure
                             var allfiles = c.listFileFromFolder(o.folder);
                             var extesions = c.returnExtensionListByLanguage(o.lang);
                             var files = c.extractFilesByExtension(allfiles, extesions);
+
+                            if (o.excludeExtension != "false")
+                            {
+                                var excludeList = c.excludeParamParser(o.excludeExtension);
+                                files = c.excludeFilesByExtension(files, excludeList);
+                            }
+
+                            if (o.excludeFileName != "false")
+                            {
+                                var excludeList = c.excludeParamParser(o.excludeFileName);
+                                files = c.excludeFileByName(files, excludeList);
+                            }
+
+                            if (o.excludeFileWithExtension != "false")
+                            {
+                                var excludeList = c.excludeParamParser(o.excludeFileWithExtension);
+                                files = c.excludeFileByFileAndExtension(files, excludeList);
+                            }
+
                             List<outputModel> resultObject = c.result(files);
 
                             if (o.output == "false")
@@ -63,7 +101,7 @@ namespace Seek4Treasure
                         }
                         else
                         {
-                            Console.WriteLine("Girdiğiniz dil için bir seçenek bulunmamaktadır.");
+                            Console.WriteLine("The language you entered is not found");
                             Environment.Exit(0);
                         }
                        

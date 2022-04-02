@@ -12,6 +12,8 @@ namespace Seek4Treasure.Control
         // Regex list
         public List<string> regexPattern = new List<string>()
         {
+            //Key,
+            "[\"|\']?[\\w?\\d? ?]*key[\"|\']? ?[=|:] ?[\"|']?(?!new)[\\w?\\d? ?]+[\"|']?;?",
             //JWT Token
             @"(^[\w-]*\.[\w-]*\.[\w-]*$)",
         };
@@ -24,11 +26,13 @@ namespace Seek4Treasure.Control
             foreach (var regex in regexPattern)
             {
                 //find regex in file loop
-                foreach (Match match in Regex.Matches(codeline, regex))
+                foreach (Match match in Regex.Matches(codeline, regex,RegexOptions.IgnoreCase))
                 {
                     if (match.Success && match.Groups.Count > 0)
                     {
-                        result.Add(Tuple.Create(codeline, regex));
+                        // in js file key value may be more than 100 and it false positive. So i write a little controll
+                        if (codeline.Length < 300) { result.Add(Tuple.Create(codeline, regex)); }
+                        
                     }
                 }
             }

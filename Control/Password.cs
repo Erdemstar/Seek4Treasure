@@ -12,9 +12,7 @@ namespace Seek4Treasure.Control
         // Regex list
         public List<string> regexPattern = new List<string>()
         {
-            "pwd",
-            "pass",
-            "password",
+            "[a-z]+[pword|pwd|pass][a-z]+ ?= ?[\"|\']/w*[\"|\'];?"
         };
 
         public List<Tuple<string,string>> Control(string codeline)

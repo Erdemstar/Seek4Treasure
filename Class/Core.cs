@@ -18,7 +18,8 @@ namespace Seek4Treasure.Class
             new KeyValuePair<string, List<string>>("python",new List<string>() {".py",}),
             new KeyValuePair<string, List<string>>("ruby",new List<string>() {".rb",}),
             new KeyValuePair<string, List<string>>("c",new List<string>() {".c",}),
-            new KeyValuePair<string, List<string>>("all",new List<string>() {".cs", ".py", ".rb", ".c", ".txt",})
+            new KeyValuePair<string, List<string>>("js",new List<string>() {".js",".json"}),
+            new KeyValuePair<string, List<string>>("all",new List<string>() {".cs", ".py", ".rb", ".c", ".txt",".js",".json"})
         };
 
         #endregion
@@ -61,7 +62,7 @@ namespace Seek4Treasure.Class
             return extensions;
         }
 
-        /// Description : Extract file by extension
+        /// Description : Extract file by extension which user select language
         /// Input       : File List and Extension List(.sh, dll)
         /// Output      : asd.sh, asd.dll      / null
         public List<string> extractFilesByExtension(List<string> allfiles, List<string> extensions)
@@ -127,7 +128,7 @@ namespace Seek4Treasure.Class
         /// Input       : filename
         /// Output      : List<outputModel> (FileName, FileNumber, Data)     / null
         public List<outputModel> fileRead(string filename)
-        {
+       {
             Password pass = new Password();
             Token token = new Token();
             Card card = new Card();
@@ -140,7 +141,7 @@ namespace Seek4Treasure.Class
                 foreach (string line in File.ReadLines(filename))
                 {
                     counter++;
-                    
+
                     foreach (var item in pass.Control(line))
                     {
                         result.Add(new outputModel() {
@@ -228,8 +229,107 @@ namespace Seek4Treasure.Class
             };
 
             var data = JsonSerializer.Serialize(result, serializeOptions);
+            try
+            {
+                File.WriteAllText(folder + "Seek4TreasureResult.json", data);
 
-            File.WriteAllText(folder + "Seek4TreasureResult.json", data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There is an error while create Seek4TreasureResult.json file. Please control path which you giving or permission");
+            }
+        }
+
+        /// Description : Extract file by extension which user give
+        /// Input       : File List (test.php, test.cs, test.json) and Extension List(.json,.cs)
+        /// Output      : test.php  
+        public List<string> excludeParamParser(string excludeParam)
+        {
+            var values = new List<string>();
+            foreach (var item in excludeParam.Split(","))
+            {
+                values.Add(item);
+            }
+
+            return values;
+
+        }
+
+        /// Description : Extract file by extension which user give
+        /// Input       : File List (test.php, test.cs, test.json) and Extension List(.json,.cs)
+        /// Output      : test.php    
+        public List<string> excludeFilesByExtension(List<string> allfiles, List<string> extensions)
+        {
+            var files = new List<string>();
+
+            foreach (var file in allfiles)
+            {
+                var ext = Path.GetExtension(file);
+                var status = false;
+
+                foreach (var extension in extensions)
+                {
+                    if (extension == ext)
+                    {
+                        status = true;
+                    }
+                }
+
+                if (status is false) { files.Add(file); }
+
+            }
+
+            return files;
+        }
+
+        /// Description : Extract file by file which user give
+        /// Input       : File List (test.php, test.cs, test.json) and File List(test.php)
+        /// Output      : test.cs, test.json
+        public List<string> excludeFileByFileAndExtension(List<string> allfiles, List<string> fileNames)
+        {
+            var files = new List<string>();
+
+            foreach (var file in allfiles)
+            {
+                var filename = Path.GetFileName(file);
+                var status = false;
+
+                foreach (var fileName in fileNames)
+                {
+                    if (filename == fileName)
+                    {
+                        status = true;
+                    }
+                }
+                if (status is false) { files.Add(file); }
+            }
+
+            return files;
+        }
+
+        /// Description : Extract file by filename which user give
+        /// Input       : File List (test.php, test.cs, test.json,deneme.php) and File List(test)
+        /// Output      : deneme.php
+        public List<string> excludeFileByName(List<string> allfiles, List<string> fileNames)
+        {
+            var files = new List<string>();
+
+            foreach (var file in allfiles)
+            {
+                var filename = Path.GetFileNameWithoutExtension(file);
+                var status = false;
+
+                foreach (var fileName in fileNames)
+                {
+                    if (filename == fileName)
+                    {
+                        status = true;
+                    }
+                }
+                if (status is false) { files.Add(file); }
+            }
+
+            return files;
         }
 
 
