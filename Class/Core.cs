@@ -18,8 +18,22 @@ namespace Seek4Treasure.Class
             new KeyValuePair<string, List<string>>("python",new List<string>() {".py",}),
             new KeyValuePair<string, List<string>>("ruby",new List<string>() {".rb",}),
             new KeyValuePair<string, List<string>>("c",new List<string>() {".c",}),
-            new KeyValuePair<string, List<string>>("js",new List<string>() {".js",".json"}),
-            new KeyValuePair<string, List<string>>("all",new List<string>() {".cs", ".py", ".rb", ".c", ".txt",".js",".json"})
+            new KeyValuePair<string, List<string>>("js",new List<string>() {".js",".ts",".json"}),
+            new KeyValuePair<string, List<string>>("all",new List<string>() 
+            {
+                ".cs", 
+                ".py", 
+                ".rb", 
+                ".c", 
+                ".js",
+                ".ts",
+                ".json",
+                //others
+                ".txt",
+                ".html",
+                ".css",
+                ".md",
+            })
         };
 
         #endregion
@@ -236,13 +250,13 @@ namespace Seek4Treasure.Class
             }
             catch (Exception ex)
             {
-                Console.WriteLine("There is an error while create Seek4TreasureResult.json file. Please control path which you giving or permission");
+                Console.WriteLine("There is an error while create Seek4TreasureResult.json file. Please control path which you giving or permission" + ex.ToString());
             }
         }
 
-        /// Description : Extract file by extension which user give
-        /// Input       : File List (test.php, test.cs, test.json) and Extension List(.json,.cs)
-        /// Output      : test.php  
+        /// Description : Take parametre from arguments and parse them
+        /// Input       : login.php, profiel.js
+        /// Output      : |List<stripng>| [0] => login.php , [1] = > profile.js 
         public List<string> excludeParamParser(string excludeParam)
         {
             var values = new List<string>();

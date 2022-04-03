@@ -12,7 +12,7 @@ namespace Seek4Treasure.Control
         // Regex list
         public List<string> regexPattern = new List<string>()
         {
-            "[a-z]+[pword|pwd|pass][a-z]+ ?= ?[\"|\']/w*[\"|\'];?"
+            "(pword|pwd|pass|password)+\\s*[=|:]\\s*[\"|'|\\s]?[a-z0-9]+[\"|'|\\s]?"
         };
 
         public List<Tuple<string,string>> Control(string codeline)
@@ -23,7 +23,7 @@ namespace Seek4Treasure.Control
             foreach (var regex in regexPattern)
             {
                 //find regex in file loop
-                foreach (Match match in Regex.Matches(codeline, regex))
+                foreach (Match match in Regex.Matches(codeline, regex, RegexOptions.IgnoreCase))
                 {
                     if (match.Success && match.Groups.Count > 0)
                     {

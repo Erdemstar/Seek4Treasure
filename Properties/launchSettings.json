@@ -2,7 +2,7 @@
   "profiles": {
     "Seek4Treasure": {
       "commandName": "Project",
-      "commandLineArgs": "--lang all --folder C:\\Users\\Erdemstar\\source\\repos\\  --output C:\\Users\\Erdemstar\\Desktop\\  --excludeExtension .js,.txt,.cs"
+      "commandLineArgs": "--lang all --folder C:\\Users\\Erdemstar\\Desktop\\Test  --output C:\\Users\\Erdemstar\\Desktop\\ "
     }
   }
 }

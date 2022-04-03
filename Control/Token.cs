@@ -13,16 +13,15 @@ namespace Seek4Treasure.Control
         public List<string> regexPattern = new List<string>()
         {
             //Key,
-            "[\"|\']?[\\w?\\d? ?]*key[\"|\']? ?[=|:] ?[\"|']?(?!new)[\\w?\\d? ?]+[\"|']?;?",
+            "(key)\\s*(=|:)\\s*(\"|')?\\s*\\w*\\d*(\"|')?",
             //JWT Token
-            @"(^[\w-]*\.[\w-]*\.[\w-]*$)",
+            "(^eyJ[\\w-]*\\.[\\w-]*\\.[\\w-]*$)",
         };
 
         public List<Tuple<string, string>> Control(string codeline)
         {
             List<Tuple<string, string>> result = new List<Tuple<string, string>>();
 
-            //regex loop
             foreach (var regex in regexPattern)
             {
                 //find regex in file loop
