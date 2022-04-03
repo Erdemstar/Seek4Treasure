@@ -10,6 +10,7 @@ namespace Seek4Treasure.Control
 {
     class Card
     {
+        public int maxResponseSize = 300;
         // Regex list
         public List<string> regexPattern = new List<string>()
         {
@@ -28,7 +29,9 @@ namespace Seek4Treasure.Control
                 {
                     if (match.Success && match.Groups.Count > 0)
                     {
-                        result.Add(Tuple.Create(codeline, regex));
+                        // Value may be more than maxResponseSize and it false positive. So i write a little controll
+                        if (codeline.Length < maxResponseSize) { result.Add(Tuple.Create(codeline, regex)); }
+
                     }
                 }
 

@@ -19,6 +19,7 @@ namespace Seek4Treasure.Class
             new KeyValuePair<string, List<string>>("ruby",new List<string>() {".rb",}),
             new KeyValuePair<string, List<string>>("c",new List<string>() {".c",}),
             new KeyValuePair<string, List<string>>("js",new List<string>() {".js",".ts",".json"}),
+            new KeyValuePair<string, List<string>>("php",new List<string>() {".php",}),
             new KeyValuePair<string, List<string>>("all",new List<string>() 
             {
                 ".cs", 
@@ -28,6 +29,7 @@ namespace Seek4Treasure.Class
                 ".js",
                 ".ts",
                 ".json",
+                ".php",
                 //others
                 ".txt",
                 ".html",

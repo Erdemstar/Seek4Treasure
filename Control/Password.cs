@@ -9,10 +9,12 @@ namespace Seek4Treasure.Control
 {
     class Password
     {
+        public int maxResponseSize = 300;
+
         // Regex list
         public List<string> regexPattern = new List<string>()
         {
-            "(pword|pwd|pass|password)+\\s*[=|:]\\s*[\"|'|\\s]?[a-z0-9]+[\"|'|\\s]?"
+            "(password|pword|pwd|pass)[]?\\s*[\"|']*\\s*[=|:]\\s*[\"|'|\\s]?[a-z0-9]+[\"|'|\\s]?"
         };
 
         public List<Tuple<string,string>> Control(string codeline)
@@ -27,7 +29,9 @@ namespace Seek4Treasure.Control
                 {
                     if (match.Success && match.Groups.Count > 0)
                     {
-                        result.Add(Tuple.Create(codeline, regex));
+                        // Value may be more than maxResponseSize and it false positive. So i write a little controll
+                        if (codeline.Length < maxResponseSize) { result.Add(Tuple.Create(codeline, regex)); }
+
                     }
                 }
 

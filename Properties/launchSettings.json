@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Seek4Treasure": {
-      "commandName": "Project",
-      "commandLineArgs": "--lang all --folder C:\\Users\\Erdemstar\\Desktop\\Test  --output C:\\Users\\Erdemstar\\Desktop\\ "
-    }
-  }
-}
